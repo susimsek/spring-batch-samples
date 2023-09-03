@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: spring-batch-service
+  profiles:
+    active: local
+  main:
+    allow-bean-definition-overriding: true
+  task:
+    execution:
+      thread-name-prefix: async-task-
+      pool:
+        core-size: 10
+        max-size: 10
+        queue-capacity: 10000
