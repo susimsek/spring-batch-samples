@@ -27,7 +27,7 @@ import org.springframework.transaction.PlatformTransactionManager
 import java.util.concurrent.Future
 import java.util.concurrent.ThreadPoolExecutor
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 class PostInfoJobConfig {
 
     @Bean
