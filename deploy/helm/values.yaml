@@ -1,0 +1,35 @@
+global:
+  imagePullSecrets: []
+
+kafka:
+  defaultTopic: xdiinweb-posts
+
+database:
+  user: user
+  password: iXCjXb7e2yjJbjRu
+
+spring:
+  profiles:
+    active: prod
+
+springBatchService:
+  parallelism: 1
+  completions:
+  backoffLimit: 0
+  activeDeadlineSeconds: 480
+  ttlSecondsAfterFinished: 90
+  restartPolicy: Never
+  image:
+    repository: suayb/spring-batch-samples
+    tag: latest
+    pullPolicy: Always
+  environment:
+  resources:
+    requests:
+      cpu: 800m
+      memory: 512Mi
+    limits:
+      cpu: 1
+      memory: 1Gi
+  podSecurityContext: {}
+  securityContext: {}

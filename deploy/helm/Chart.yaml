@@ -1,0 +1,13 @@
+apiVersion: v2
+name: spring-batch-sample
+description: Spring Batch Samples
+icon: https://github.com/susimsek/spring-batch-samples/blob/main/images/introduction.png
+keywords:
+  - spring
+  - batch
+  - microservice
+  - spring-boot
+
+type: application
+version: 1.0.0
+appVersion: "1.0.0"

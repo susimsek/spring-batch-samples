@@ -33,7 +33,7 @@ To compile as native, run the following goal:
 $ mvn native:compile -Pnative
 ```
 
-Then, you can run the app as follows:
+Then, you can run the batch as follows:
 
 ```
 $ target/spring-batch-samples
@@ -41,7 +41,7 @@ $ target/spring-batch-samples
 
 ## Testing
 
-You can run application's tests by typing the following command
+You can run batchlication's tests by typing the following command
 
 ```
 mvn verify
@@ -77,17 +77,69 @@ You can see the generated report at `target/dependency-check-report.html`
 
 ## Docker
 
-You can also fully dockerize  the sample applications. To achieve this, first build a docker image of your app.
-The docker image of sample app can be built as follows:
+You can also fully dockerize  the sample batchlications. To achieve this, first build a docker image of your batch.
+The docker image of sample batch can be built as follows:
 
 to build native image
 ```sh
 mvn -Pnative spring-boot:build-image
 ```
 
+## Deployment with Docker Compose
+
+### Prerequisites for Docker Compose Deployment
+
+* Docker
+* Docker Compose
+
+You can deploy batch by running the following bash command
+
+
+```sh
+ sudo chmod +x deploy.sh
+```
+
+```sh
+ ./deploy.sh -d
+```
+
+You can uninstall batch the following bash command
+
+```sh
+ ./deploy.sh -d -r
+```
+
+## Deployment Kubernetes with Helm
+
+### Prerequisites for Kubernetes Deployment
+
+* Kubernetes
+* Helm
+
+You can deploy batch by running the following bash command
+
+```sh
+ sudo chmod +x deploy.sh
+```
+
+```sh
+ ./deploy.sh -k
+```
+
+You can uninstall batch the following bash command
+
+```sh
+ ./deploy.sh -k -r
+```
+
+You can upgrade the batch (if you have made any changes to the generated manifests) by running the
+following bash command
+
+```sh
+ ./deploy.sh -u
+```
 
 # Used Technologies
-## Backend Side
 * Java 17
 * Kotlin 
 * GraalVM

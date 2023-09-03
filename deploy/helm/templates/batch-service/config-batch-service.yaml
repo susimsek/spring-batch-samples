@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-batch-service-config
+  labels:
+  {{- include "spring-batch-service.labels" . | nindent 4 }}
+data:
+  SPRING_DATASOURCE_URL: jdbc:h2:mem:sample;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS Schema
+  SPRING_DATASOURCE_USERNAME: ${DATABASE_USERNAME}
+  SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD}
+  SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+  SPRING_KAFKA_TEMPLATE_DEFAULT_TOPIC: {{ .Values.kafka.defaultTopic }}

@@ -23,3 +23,18 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+  kafka:
+    template:
+      default-topic: xdiinweb-posts
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      group-id: xdiinweb-posts
+      heartbeat-interval: 3000ms
+      max-poll-records: 500
+      properties:
+        spring.json.trusted.packages: 'io.github.susimsek.springbatchsamples.model'
