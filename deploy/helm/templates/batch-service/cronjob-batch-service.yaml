@@ -1,0 +1,65 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: spring-batch-cron-job
+  labels:
+    {{- include "spring-batch-cron-job.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.springBatchCronJob.schedule | quote }}
+  concurrencyPolicy: {{ .Values.springBatchCronJob.concurrencyPolicy }}
+  failedJobsHistoryLimit: {{ .Values.springBatchCronJob.failedJobsHistoryLimit }}
+  successfulJobsHistoryLimit: {{ .Values.springBatchCronJob.successfulJobsHistoryLimit }}
+  jobTemplate:
+    spec:
+      backoffLimit: {{ .Values.springBatchCronJob.backoffLimit | default 0 }}
+      suspend: false
+      template:
+        metadata:
+          labels:
+            {{- include "spring-batch-cron-job.selectorLabels" . | nindent 8 }}
+        spec:
+          restartPolicy: {{ .Values.springBatchCronJob.restartPolicy | default "Never" }}
+          {{- if .Values.global.imagePullSecrets }}
+          imagePullSecrets: {{- toYaml .Values.global.imagePullSecrets | nindent 4 }}
+          {{- end }}
+          securityContext:
+            {{- toYaml .Values.springBatchCronJob.podSecurityContext | nindent 12 }}
+          containers:
+            {{- if .Values.springBatchCronJob.extraSideContainers }}
+            {{ tpl .Values.springBatchCronJob.extraSideContainers . | indent 8 }}
+            {{- end }}
+            - name: {{ .Chart.Name }}
+              image: "{{ .Values.springBatchCronJob.image.repository }}:{{ .Values.springBatchCronJob.image.tag }}"
+              imagePullPolicy: {{ .Values.springBatchCronJob.image.pullPolicy }}
+              {{- if .Values.springBatchCronJob.command }}
+              command:
+              {{ tpl .Values.springBatchCronJob.command . | indent 12 }}
+              {{- end }}
+              {{- if .Values.springBatchCronJob.args }}
+              args:
+              {{ tpl .Values.springBatchCronJob.args . | indent 12 }}
+              {{- end }}
+              {{- if .Values.springBatchCronJob.resources }}
+              resources: {{- toYaml .Values.springBatchCronJob.resources | nindent 16 }}
+              {{- end }}
+              securityContext: {{- toYaml .Values.springBatchCronJob.securityContext | nindent 16 }}
+              env:
+                - name: SPRING_PROFILES_ACTIVE
+                  value: {{ .Values.spring.profiles.active }}
+              envFrom:
+                - secretRef:
+                    name: db-secret
+                - configMapRef:
+                    name: spring-batch-service-config
+              volumeMounts:
+              {{- if .Values.springBatchCronJob.extraVolumeMounts }}
+              {{- toYaml .Values.springBatchCronJob.extraVolumeMounts | nindent 12 }}
+              {{- end }}
+          {{- if .Values.springBatchCronJob.extraInitContainers }}
+          initContainers:
+          {{ tpl .Values.springBatchCronJob.extraInitContainers . | indent 8 }}
+          {{- end }}
+          volumes:
+               {{- if .Values.springBatchCronJob.extraVolumes }}
+               {{- toYaml .Values.springBatchCronJob.extraVolumes | nindent 8 }}
+           {{- end }}

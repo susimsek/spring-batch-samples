@@ -40,6 +40,10 @@ spec:
           command:
           {{ tpl .Values.springBatchService.command . | indent 12 }}
           {{- end }}
+          {{- if .Values.springBatchService.args }}
+          args:
+          {{ tpl .Values.springBatchService.args . | indent 12 }}
+          {{- end }}
           {{- if .Values.springBatchService.resources }}
           resources: {{- toYaml .Values.springBatchService.resources | nindent 12 }}
           {{- end }}

@@ -33,3 +33,29 @@ springBatchService:
       memory: 1Gi
   podSecurityContext: {}
   securityContext: {}
+  args: [ ]
+  command: [ ]
+
+springBatchCronJob:
+  schedule: "*/1 * * * *"
+  backoffLimit: 0
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 3
+  concurrencyPolicy: Allow
+  restartPolicy: Never
+  image:
+    repository: suayb/spring-batch-samples
+    tag: latest
+    pullPolicy: Always
+  environment:
+  resources:
+    requests:
+      cpu: 800m
+      memory: 512Mi
+    limits:
+      cpu: 1
+      memory: 1Gi
+  podSecurityContext: { }
+  securityContext: { }
+  args: []
+  command: []
