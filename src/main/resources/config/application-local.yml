@@ -20,7 +20,7 @@ spring:
     defer-datasource-initialization: true
     show-sql: true
     properties:
-      redis.expiryInSeconds.default: 3600
+      hibernate.cache.redisson.entity.expiration.time_to_live: 3600000
   kafka:
     bootstrap-servers: localhost:9092
     template:

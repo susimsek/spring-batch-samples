@@ -15,3 +15,8 @@ singleServerConfig:
   connectionPoolSize: 64
   database: ${SPRING_DATA_REDIS_DATABASE:-0}
   dnsMonitoringInterval: 5000
+threads: 16
+nettyThreads: 32
+# Codec
+codec: !<org.redisson.codec.SnappyCodec> {}
+transportMode: "NIO"

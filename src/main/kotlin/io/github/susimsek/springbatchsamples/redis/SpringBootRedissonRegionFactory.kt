@@ -8,11 +8,9 @@ class SpringBootRedissonRegionFactory(
     private val redissonClient: RedissonClient) : RedissonRegionFactory() {
 
     override fun createRedissonClient(
-        registry: StandardServiceRegistry?,
-        properties: MutableMap<Any?, Any?>?
+        registry: StandardServiceRegistry,
+        properties: MutableMap<Any?, Any?>
     ): RedissonClient {
         return redissonClient;
     }
-
-    override fun releaseFromUse() {}
 }

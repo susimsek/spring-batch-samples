@@ -16,6 +16,7 @@ spring:
     open-in-view: false
     properties:
       hibernate.connection.provider_disables_autocommit: true
+      hibernate.cache.redisson.fallback: true
       hibernate.cache.use_second_level_cache: true
       hibernate.cache.use_query_cache: true
       hibernate.generate_statistics: false

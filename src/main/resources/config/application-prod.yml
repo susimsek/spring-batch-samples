@@ -15,7 +15,7 @@ spring:
   jpa:
     defer-datasource-initialization: true
     properties:
-      redis.expiryInSeconds.default: 3600
+      hibernate.cache.redisson.entity.expiration.time_to_live: 3600000
   kafka:
     template:
       default-topic: xdiinweb-posts

@@ -36,16 +36,15 @@ class DatabaseConfig {
         return DateTimeProvider { Optional.of(OffsetDateTime.now(clock)) }
     }
 
+
     @Bean
     fun redissonClient(
         @Value("classpath:/redisson.yml") configFile: Resource,
         objectMapper: ObjectMapper): RedissonClient {
         val config = Config.fromYAML(configFile.inputStream)
-        config.nettyThreads = 4
-        config.threads = 4
-        config.codec = null
         return Redisson.create(config)
     }
+
 
     @Bean
     fun hibernatePropertiesCustomizer(redissonClient: RedissonClient): HibernatePropertiesCustomizer {
