@@ -1,11 +1,11 @@
 package io.github.susimsek.springbatchsamples.domain
 
 import io.github.susimsek.springbatchsamples.domain.enumerated.PostStatus
-import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
-import jakarta.persistence.Table
+import jakarta.persistence.*
+import org.hibernate.annotations.Cache
+import org.hibernate.annotations.CacheConcurrencyStrategy
 
+@Cache(region = "postCache", usage = CacheConcurrencyStrategy.READ_WRITE)
 @Entity
 @Table(name = "post")
 data class Post(

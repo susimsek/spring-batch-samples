@@ -77,8 +77,12 @@ You can see the generated report at `target/dependency-check-report.html`
 
 ## Docker
 
-You can also fully dockerize  the sample batchlications. To achieve this, first build a docker image of your batch.
-The docker image of sample batch can be built as follows:
+You can also fully dockerize  the sample applications. To achieve this, first build a docker image of your app.
+The docker image of sample app can be built as follows:
+
+```sh
+mvn -Pjib verify jib:dockerBuild
+```
 
 to build native image
 ```sh

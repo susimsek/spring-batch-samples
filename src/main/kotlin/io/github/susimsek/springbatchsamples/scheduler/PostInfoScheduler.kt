@@ -16,7 +16,7 @@ class PostInfoScheduler(
 
     private val log = LoggerFactory.getLogger(javaClass)
 
-    @Scheduled(cron = "\${post.info.cron.expression}")
+    @Scheduled(cron = "\${cron.expression.post-info}")
     @Throws(Exception::class)
     fun perform() {
         log.info("Job Started at : {}" + OffsetDateTime.now())

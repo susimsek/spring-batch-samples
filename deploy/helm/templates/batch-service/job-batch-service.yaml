@@ -54,6 +54,8 @@ spec:
           envFrom:
             - secretRef:
                 name: db-secret
+            - secretRef:
+                name: redis-secret
             - configMapRef:
                 name: spring-batch-service-config
           volumeMounts:
