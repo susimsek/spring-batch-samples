@@ -48,9 +48,8 @@ class DatabaseConfig {
 
     @Bean
     fun hibernatePropertiesCustomizer(redissonClient: RedissonClient): HibernatePropertiesCustomizer {
-        return HibernatePropertiesCustomizer { hibernateProperties: MutableMap<String, Any> ->
-            hibernateProperties[AvailableSettings.CACHE_REGION_FACTORY] =
-                SpringBootRedissonRegionFactory(redissonClient)
+        return HibernatePropertiesCustomizer { hibernateProperties ->
+            hibernateProperties[AvailableSettings.CACHE_REGION_FACTORY] = SpringBootRedissonRegionFactory(redissonClient)
         }
     }
 }
