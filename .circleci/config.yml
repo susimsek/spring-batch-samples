@@ -51,7 +51,7 @@ jobs:
           command: mvn -ntp -Psonar initialize sonar:sonar -Dsonar.login=$SONAR_TOKEN
       - run:
           name: Publish Docker
-          command: mvn -Pnative spring-boot:build-image -Dspring-boot.build-image.publish=true -Ddocker.image.name=docker.io/suayb/spring-batch-samples -Ddocker.credentials.username=$DOCKER_REGISTRY_USERNAME -Ddocker.credentials.password=$DOCKER_REGISTRY_PASSWORD -DskipTests
+          command: mvn -ntp -Pjib jib:build -Ddocker.image.name=docker.io/suayb/spring-batch-samples -Djib.from.auth.username=$DOCKER_REGISTRY_USERNAME -Djib.from.auth.password=$DOCKER_REGISTRY_PASSWORD -DskipTests
 
 workflows:
   version: 2
