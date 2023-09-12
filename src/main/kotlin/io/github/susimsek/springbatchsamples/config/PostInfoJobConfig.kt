@@ -6,6 +6,7 @@ import io.github.susimsek.springbatchsamples.repository.PostRepository
 import io.github.susimsek.springbatchsamples.batch.PostInfoItemProcessor
 import io.github.susimsek.springbatchsamples.batch.PostInfoItemReader
 import io.github.susimsek.springbatchsamples.batch.PostInfoItemWriter
+import io.github.susimsek.springbatchsamples.mapper.PostMapper
 import io.github.susimsek.springbatchsamples.model.PostPayload
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
@@ -15,6 +16,7 @@ import org.springframework.batch.core.repository.JobRepository
 import org.springframework.batch.core.step.builder.StepBuilder
 import org.springframework.batch.integration.async.AsyncItemProcessor
 import org.springframework.batch.integration.async.AsyncItemWriter
+import org.springframework.batch.item.ItemProcessor
 import org.springframework.batch.item.data.RepositoryItemReader
 import org.springframework.batch.item.kafka.KafkaItemWriter
 import org.springframework.boot.autoconfigure.task.TaskExecutionProperties
@@ -86,8 +88,13 @@ class PostInfoJobConfig {
     }
 
     @Bean
+    fun postInfoItemProcessor(postMapper: PostMapper): ItemProcessor<Post, PostPayload> {
+        return PostInfoItemProcessor(postMapper)
+    }
+
+    @Bean
     fun asyncPostInfoItemProcessor(
-        postInfoItemProcessor: PostInfoItemProcessor,
+        postInfoItemProcessor: ItemProcessor<Post, PostPayload>,
         taskExecutor: TaskExecutor
     ): AsyncItemProcessor<Post, PostPayload> {
         val asyncItemProcessor = AsyncItemProcessor<Post, PostPayload>()

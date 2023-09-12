@@ -5,9 +5,7 @@ import io.github.susimsek.springbatchsamples.mapper.PostMapper
 import io.github.susimsek.springbatchsamples.model.PostPayload
 import org.slf4j.LoggerFactory
 import org.springframework.batch.item.ItemProcessor
-import org.springframework.stereotype.Component
 
-@Component
 class PostInfoItemProcessor(private val postMapper: PostMapper) : ItemProcessor<Post, PostPayload> {
 
     private val log = LoggerFactory.getLogger(javaClass)
