@@ -9,12 +9,12 @@ networks:
 
 services:
   redis:
-    image: redis:7.0.4
+    image: redis:7.0.4-alpine
     restart: unless-stopped
     container_name: redis
     networks:
       - backend
-    command: redis-server --appendonly yes --requirepass "$REDIS_PASSWORD"
+    command: /bin/sh -c "redis-server --requirepass $$REDIS_PASSWORD"
     environment:
       - REDIS_PASSWORD=d41d8cd98f00b204e9800998ecf8427e
     volumes:

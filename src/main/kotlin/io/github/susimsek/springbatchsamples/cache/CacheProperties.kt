@@ -18,6 +18,6 @@ data class Redis(
     var subscriptionConnectionPoolSize: Int = CacheDefaults.Redis.subscriptionConnectionPoolSize,
     var subscriptionConnectionMinimumIdleSize: Int = CacheDefaults.Redis.subscriptionConnectionMinimumIdleSize,
     var username: String = CacheDefaults.Redis.username,
-    var pasword: String?,
+    var password: String?,
     var dnsMonitoringInterval: Long = CacheDefaults.Redis.dnsMonitoringInterval
 )

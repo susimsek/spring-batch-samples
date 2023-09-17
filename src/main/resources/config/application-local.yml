@@ -53,5 +53,5 @@ logging:
 
 cache:
   redis:
-    server: redis://localhost:6379
+    server: redis://localhost:6380
     cluster: false

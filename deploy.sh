@@ -82,9 +82,9 @@ else
       kubectl create namespace ${namespace}
       helm repo add bitnami https://charts.bitnami.com/bitnami
       helm repo update
-      helm install kafka bitnami/kafka --values ./deploy/${suffix}/helm-kafka-values.yml -n ${namespace}
-      kubectl rollout status statefulset kafka -n ${namespace}
-      helm install redis bitnami/redis --values ./deploy/${suffix}/helm-redis-values.yml -n ${namespace}
+      helm install kafka bitnami/kafka --values ./deploy/${suffix}/helm-kafka-values.yml -n ${namespace} --version 25.1.10
+      kubectl rollout status statefulset kafka-controller -n ${namespace}
+      helm install redis bitnami/redis --values ./deploy/${suffix}/helm-redis-values.yml -n ${namespace} --version 18.0.4
       kubectl rollout status statefulset redis-master -n ${namespace}
       helm dep up ./deploy/${suffix}
        if [ -n "$istio" ]; then

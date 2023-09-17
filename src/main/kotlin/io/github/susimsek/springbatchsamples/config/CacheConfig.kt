@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomi
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.util.StringUtils
 
 
 @Configuration(proxyBeanMethods = false)
@@ -23,7 +24,7 @@ class CacheConfig {
     ): RedissonClient {
         var config = Config()
         if (cacheProperties.redis.isCluster) {
-            config
+            val clusterServers = config
                 .useClusterServers()
                 .setMasterConnectionPoolSize(cacheProperties.redis.connectionPoolSize)
                 .setMasterConnectionMinimumIdleSize(
@@ -35,11 +36,13 @@ class CacheConfig {
                 .addNodeAddress(*cacheProperties.redis.server.toTypedArray())
                 .setDnsMonitoringInterval(cacheProperties.redis.dnsMonitoringInterval)
                 .setUsername(cacheProperties.redis.username)
-                .password = cacheProperties.redis.pasword
+            if (StringUtils.hasText(cacheProperties.redis.password)) {
+                clusterServers.password = cacheProperties.redis.password
+            }
             config.codec = SnappyCodecV2()
             return Redisson.create(config)
         } else {
-            config
+            val singleServer = config
                 .useSingleServer()
                 .setConnectionPoolSize(cacheProperties.redis.connectionPoolSize)
                 .setConnectionMinimumIdleSize(cacheProperties.redis.connectionMinimumIdleSize)
@@ -49,7 +52,9 @@ class CacheConfig {
                 .setAddress(cacheProperties.redis.server[0])
                 .setDnsMonitoringInterval(cacheProperties.redis.dnsMonitoringInterval)
                 .setUsername(cacheProperties.redis.username)
-                .password = cacheProperties.redis.pasword
+            if (StringUtils.hasText(cacheProperties.redis.password)) {
+                singleServer.password = cacheProperties.redis.password
+            }
             config.codec = SnappyCodecV2()
         }
         return Redisson.create(config)
