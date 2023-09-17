@@ -149,6 +149,9 @@ following bash command
 * GraalVM
 * Upx
 * Docker
+* Docker Compose
+* Kubernetes
+* Helm
 * Sonarqube
 * Snyk
 * CircleCI
