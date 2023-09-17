@@ -1,13 +1,13 @@
 package io.github.susimsek.springbatchsamples.config
 
-import io.github.susimsek.springbatchsamples.domain.Post
-import io.github.susimsek.springbatchsamples.listener.JobCompletionNotificationListener
-import io.github.susimsek.springbatchsamples.repository.PostRepository
 import io.github.susimsek.springbatchsamples.batch.PostInfoItemProcessor
 import io.github.susimsek.springbatchsamples.batch.PostInfoItemReader
 import io.github.susimsek.springbatchsamples.batch.PostInfoItemWriter
+import io.github.susimsek.springbatchsamples.domain.Post
+import io.github.susimsek.springbatchsamples.listener.JobCompletionNotificationListener
 import io.github.susimsek.springbatchsamples.mapper.PostMapper
 import io.github.susimsek.springbatchsamples.model.PostPayload
+import io.github.susimsek.springbatchsamples.repository.PostRepository
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.job.builder.JobBuilder
