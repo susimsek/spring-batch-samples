@@ -1,11 +1,10 @@
 replicaCount: 1
-autoCreateTopicsEnable: true
-deleteTopicEnable: false
+
+extraConfig: "autoCreateTopicsEnable=true;deleteTopicEnable=false"
 
 controller:
   replicaCount: 1
   controllerOnly: true
-  zookeeperMigrationMode: true
   persistence:
     size: 50M
 
