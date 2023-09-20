@@ -4,7 +4,9 @@ import io.github.susimsek.springbatchsamples.model.PostPayload
 import org.springframework.batch.item.kafka.KafkaItemWriter
 import org.springframework.kafka.core.KafkaTemplate
 
-class PostInfoItemWriter(kafkaTemplate: KafkaTemplate<String, PostPayload>) : KafkaItemWriter<String, PostPayload>() {
+class PostInfoItemWriter(
+    kafkaTemplate: KafkaTemplate<String, PostPayload>
+) : KafkaItemWriter<String, PostPayload>() {
 
     init {
         setKafkaTemplate(kafkaTemplate)

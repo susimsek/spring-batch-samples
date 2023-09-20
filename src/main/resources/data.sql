@@ -1,1 +1,2 @@
+INSERT INTO post (id, title, content, status, created_at, updated_at, version) VALUES ('d8caf856-53de-4d84-ba45-fbd940e2b24b', 'test123', 'test content 123', 'DRAFT', '2023-02-26T10:56:01.078Z', '2023-02-26T10:56:01.078Z', 1);
 INSERT INTO post (id, title, content, status, created_at, updated_at, version) VALUES ('d8caf856-53de-4d84-ba45-fbd940e2b24a', 'test1234', 'test content 1234', 'DRAFT', '2023-02-26T10:56:01.078Z', '2023-02-26T10:56:01.078Z', 1);

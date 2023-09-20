@@ -5,6 +5,7 @@ spring:
       platform: h2
     job:
       enabled: true
+      name: postInfoBloomFilterJob
   datasource:
     url: jdbc:h2:mem:sample;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS Schema
     username: sa
