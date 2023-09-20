@@ -5,12 +5,13 @@ import org.redisson.api.RedissonClient
 import org.redisson.hibernate.RedissonRegionFactory
 
 class SpringRedissonRegionFactory(
-    private val redissonClient: RedissonClient) : RedissonRegionFactory() {
+    private val redissonClient: RedissonClient
+) : RedissonRegionFactory() {
 
     override fun createRedissonClient(
         registry: StandardServiceRegistry,
         properties: MutableMap<Any?, Any?>
     ): RedissonClient {
-        return redissonClient;
+        return redissonClient
     }
 }

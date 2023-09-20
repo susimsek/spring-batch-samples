@@ -2,6 +2,7 @@ package io.github.susimsek.springbatchsamples.mapper
 
 import io.github.susimsek.springbatchsamples.domain.Post
 import io.github.susimsek.springbatchsamples.model.PostPayload
+import io.github.susimsek.springbatchsamples.model.PostSummary
 import org.mapstruct.InjectionStrategy
 import org.mapstruct.Mapper
 import org.mapstruct.ReportingPolicy
@@ -11,4 +12,6 @@ import org.mapstruct.ReportingPolicy
     unmappedTargetPolicy = ReportingPolicy.IGNORE,
     injectionStrategy = InjectionStrategy.CONSTRUCTOR
 )
-interface PostMapper : EntityMapper<Post, PostPayload>
+interface PostMapper : EntityMapper<Post, PostPayload> {
+    fun toPostSummary(entity: Post): PostSummary
+}

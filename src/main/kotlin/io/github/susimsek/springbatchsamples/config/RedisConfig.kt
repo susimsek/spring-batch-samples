@@ -1,6 +1,7 @@
 package io.github.susimsek.springbatchsamples.config
 
 import io.github.susimsek.springbatchsamples.cache.CacheProperties
+import io.github.susimsek.springbatchsamples.model.PostSummary
 import org.redisson.Redisson
 import org.redisson.api.RBloomFilter
 import org.redisson.api.RedissonClient
@@ -58,7 +59,14 @@ class RedisConfig {
     @Bean
     fun titleBloomFilter(redissonClient: RedissonClient): RBloomFilter<String> {
         val bloomFilter = redissonClient.getBloomFilter<String>("titles")
-        bloomFilter.tryInit(99999, 0.001)
+        bloomFilter.tryInit(2, 0.03)
+        return bloomFilter
+    }
+
+    @Bean
+    fun postSummaryBloomFilter(redissonClient: RedissonClient): RBloomFilter<PostSummary> {
+        val bloomFilter = redissonClient.getBloomFilter<PostSummary>("postSummaries")
+        bloomFilter.tryInit(2, 0.03)
         return bloomFilter
     }
 }

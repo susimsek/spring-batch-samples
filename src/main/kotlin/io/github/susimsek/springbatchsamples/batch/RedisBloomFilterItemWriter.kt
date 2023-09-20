@@ -21,7 +21,7 @@ class RedisBloomFilterItemWriter<T> : ItemWriter<T>, InitializingBean {
 
     private fun doWrite(items: Chunk<out T>) {
         if (log.isDebugEnabled) {
-            log.debug("Writing to the repository with " + items.size() + " items.");
+            log.debug("Writing to the repository with " + items.size() + " items.")
         }
         val var3 = items.iterator()
 
@@ -32,7 +32,7 @@ class RedisBloomFilterItemWriter<T> : ItemWriter<T>, InitializingBean {
     }
 
     fun setBloomFilter(bloomFilter: RBloomFilter<T>) {
-        this.bloomFilter = bloomFilter;
+        this.bloomFilter = bloomFilter
     }
 
     @Throws(Exception::class)
