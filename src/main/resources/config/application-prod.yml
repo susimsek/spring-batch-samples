@@ -5,7 +5,7 @@ spring:
       platform: h2
     job:
       enabled: true
-      name: postInfoBloomFilterJob
+      name: postInfoJob
   datasource:
     hikari:
       maximum-pool-size: 30
