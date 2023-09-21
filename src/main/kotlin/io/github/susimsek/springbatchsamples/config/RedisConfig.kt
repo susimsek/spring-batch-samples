@@ -14,7 +14,7 @@ import org.springframework.util.StringUtils
 @Configuration(proxyBeanMethods = false)
 class RedisConfig {
 
-    @Bean(destroyMethod="shutdown")
+    @Bean(destroyMethod = "shutdown")
     fun redissonClient(
         cacheProperties: CacheProperties
     ): RedissonClient {

@@ -8,7 +8,6 @@ import org.springframework.batch.core.JobExecution
 import org.springframework.batch.core.JobExecutionListener
 import org.springframework.stereotype.Component
 
-
 @Component
 class JobCompletionNotificationListener(
     private val postBloomFilterService: PostBloomFilterService
@@ -23,13 +22,15 @@ class JobCompletionNotificationListener(
     override fun afterJob(jobExecution: JobExecution) {
         if (jobExecution.status === BatchStatus.COMPLETED) {
             log.info("!!! JOB FINISHED! Time to verify the results")
-            var title = "test1234";
+            var title = "test1234"
             var result = postBloomFilterService.checkIfPostSummaryAvailability(
-                PostSummary("d8caf856-53de-4d84-ba45-fbd940e2b24b", title))
+                PostSummary("d8caf856-53de-4d84-ba45-fbd940e2b24b", title)
+            )
             log.info("'{}' title is exists: {}", title, result)
-            title = "test";
+            title = "test"
             result = postBloomFilterService.checkIfPostSummaryAvailability(
-                PostSummary("d8caf856-53de-4d84-ba45-fbd940e2b24b", title))
+                PostSummary("d8caf856-53de-4d84-ba45-fbd940e2b24b", title)
+            )
             log.info("'{}' title is exists: {}", title, result)
         }
     }

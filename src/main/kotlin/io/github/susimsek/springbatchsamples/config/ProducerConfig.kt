@@ -13,8 +13,9 @@ class ProducerConfig {
 
     @Bean
     fun kafkaProducerFactoryCustomizer(
-        objectMapper: ObjectMapper) = DefaultKafkaProducerFactoryCustomizer {
-        producerFactory ->
+        objectMapper: ObjectMapper
+    ) = DefaultKafkaProducerFactoryCustomizer {
+            producerFactory ->
         producerFactory.valueSerializer = JsonSerializer(objectMapper)
     }
 }

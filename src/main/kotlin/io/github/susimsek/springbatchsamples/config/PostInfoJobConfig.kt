@@ -17,10 +17,8 @@ import org.springframework.batch.core.step.builder.StepBuilder
 import org.springframework.batch.integration.async.AsyncItemProcessor
 import org.springframework.batch.integration.async.AsyncItemWriter
 import org.springframework.batch.item.ItemProcessor
-import org.springframework.batch.item.ItemWriter
 import org.springframework.batch.item.data.RepositoryItemReader
 import org.springframework.batch.item.kafka.KafkaItemWriter
-import org.springframework.batch.item.support.CompositeItemWriter
 import org.springframework.boot.autoconfigure.task.TaskExecutionProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -30,7 +28,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
 import org.springframework.transaction.PlatformTransactionManager
 import java.util.concurrent.Future
 import java.util.concurrent.ThreadPoolExecutor
-
 
 @Configuration(proxyBeanMethods = false)
 class PostInfoJobConfig {
