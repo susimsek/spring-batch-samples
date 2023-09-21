@@ -1,11 +1,10 @@
 package io.github.susimsek.springbatchsamples.config
 
 import io.github.susimsek.springbatchsamples.batch.PostInfoBloomFilterItemProcessor
+import io.github.susimsek.springbatchsamples.batch.PostInfoBloomFilterItemReader
 import io.github.susimsek.springbatchsamples.batch.RedisBloomFilterItemWriter
-import io.github.susimsek.springbatchsamples.domain.Post
 import io.github.susimsek.springbatchsamples.listener.JobCompletionNotificationListener
-import io.github.susimsek.springbatchsamples.mapper.PostMapper
-import io.github.susimsek.springbatchsamples.model.PostSummary
+import io.github.susimsek.springbatchsamples.model.PostTitle
 import org.redisson.api.RBloomFilter
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
@@ -16,7 +15,7 @@ import org.springframework.batch.core.step.builder.StepBuilder
 import org.springframework.batch.integration.async.AsyncItemProcessor
 import org.springframework.batch.integration.async.AsyncItemWriter
 import org.springframework.batch.item.ItemProcessor
-import org.springframework.batch.item.data.RepositoryItemReader
+import org.springframework.batch.item.ItemReader
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.task.TaskExecutor
@@ -45,13 +44,13 @@ class PostInfoBloomFilterJobConfig {
         jobRepository: JobRepository,
         transactionManager: PlatformTransactionManager,
         taskExecutor: TaskExecutor,
-        postInfoItemReader: RepositoryItemReader<Post>,
-        asyncPostInfoBloomFilterItemProcessor: AsyncItemProcessor<Post, PostSummary>,
-        asyncPostInfoBloomFilterItemWriter: AsyncItemWriter<PostSummary>
+        postInfoBloomFilterItemReader: ItemReader<PostTitle>,
+        asyncPostInfoBloomFilterItemProcessor: AsyncItemProcessor<PostTitle, PostTitle>,
+        asyncPostInfoBloomFilterItemWriter: AsyncItemWriter<PostTitle>
     ): Step {
         return StepBuilder("postInfoBloomFilterStep", jobRepository)
-            .chunk<Post, Future<PostSummary>>(10, transactionManager)
-            .reader(postInfoItemReader)
+            .chunk<PostTitle, Future<PostTitle>>(100, transactionManager)
+            .reader(postInfoBloomFilterItemReader)
             .processor(asyncPostInfoBloomFilterItemProcessor)
             .writer(asyncPostInfoBloomFilterItemWriter)
             .taskExecutor(taskExecutor)
@@ -59,18 +58,21 @@ class PostInfoBloomFilterJobConfig {
     }
 
     @Bean
-    fun postInfoBloomFilterItemProcessor(
-        postMapper: PostMapper
-    ): ItemProcessor<Post, PostSummary> {
-        return PostInfoBloomFilterItemProcessor(postMapper)
+    fun postInfoBloomFilterItemReader(): ItemReader<PostTitle> {
+        return PostInfoBloomFilterItemReader()
+    }
+
+    @Bean
+    fun postInfoBloomFilterItemProcessor(): ItemProcessor<PostTitle, PostTitle> {
+        return PostInfoBloomFilterItemProcessor()
     }
 
     @Bean
     fun asyncPostInfoBloomFilterItemProcessor(
-        postInfoBloomFilterItemProcessor: ItemProcessor<Post, PostSummary>,
+        postInfoBloomFilterItemProcessor: ItemProcessor<PostTitle, PostTitle>,
         taskExecutor: TaskExecutor
-    ): AsyncItemProcessor<Post, PostSummary> {
-        val asyncItemProcessor = AsyncItemProcessor<Post, PostSummary>()
+    ): AsyncItemProcessor<PostTitle, PostTitle> {
+        val asyncItemProcessor = AsyncItemProcessor<PostTitle, PostTitle>()
         asyncItemProcessor.setDelegate(postInfoBloomFilterItemProcessor)
         asyncItemProcessor.setTaskExecutor(taskExecutor)
         return asyncItemProcessor
@@ -78,18 +80,18 @@ class PostInfoBloomFilterJobConfig {
 
     @Bean
     fun asyncPostInfoBloomFilterItemWriter(
-        postInfoBloomFilterItemWriter: RedisBloomFilterItemWriter<PostSummary>
-    ): AsyncItemWriter<PostSummary> {
-        val asyncWriter = AsyncItemWriter<PostSummary>()
+        postInfoBloomFilterItemWriter: RedisBloomFilterItemWriter<PostTitle>
+    ): AsyncItemWriter<PostTitle> {
+        val asyncWriter = AsyncItemWriter<PostTitle>()
         asyncWriter.setDelegate(postInfoBloomFilterItemWriter)
         return asyncWriter
     }
 
     @Bean
     fun postInfoBloomFilterItemWriter(
-        postSummaryBloomFilter: RBloomFilter<PostSummary>
-    ): RedisBloomFilterItemWriter<PostSummary> {
-        val redisBloomFilterItemWriter = RedisBloomFilterItemWriter<PostSummary>()
+        postSummaryBloomFilter: RBloomFilter<PostTitle>
+    ): RedisBloomFilterItemWriter<PostTitle> {
+        val redisBloomFilterItemWriter = RedisBloomFilterItemWriter<PostTitle>()
         redisBloomFilterItemWriter.setBloomFilter(postSummaryBloomFilter)
         redisBloomFilterItemWriter.afterPropertiesSet()
         return redisBloomFilterItemWriter

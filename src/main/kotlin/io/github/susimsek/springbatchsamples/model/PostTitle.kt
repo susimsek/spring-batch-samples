@@ -2,9 +2,7 @@ package io.github.susimsek.springbatchsamples.model
 
 import java.io.Serializable
 
-data class PostSummary(
-    val id: String,
-
+data class PostTitle(
     val title: String
 
 ) : Serializable {

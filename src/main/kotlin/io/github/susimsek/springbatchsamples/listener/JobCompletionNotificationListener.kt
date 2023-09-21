@@ -1,6 +1,6 @@
 package io.github.susimsek.springbatchsamples.listener
 
-import io.github.susimsek.springbatchsamples.model.PostSummary
+import io.github.susimsek.springbatchsamples.model.PostTitle
 import io.github.susimsek.springbatchsamples.service.PostBloomFilterService
 import org.slf4j.LoggerFactory
 import org.springframework.batch.core.BatchStatus
@@ -23,13 +23,13 @@ class JobCompletionNotificationListener(
         if (jobExecution.status === BatchStatus.COMPLETED) {
             log.info("!!! JOB FINISHED! Time to verify the results")
             var title = "test1234"
-            var result = postBloomFilterService.checkIfPostSummaryAvailability(
-                PostSummary("d8caf856-53de-4d84-ba45-fbd940e2b24b", title)
+            var result = postBloomFilterService.checkIfPostTitleAvailability(
+                PostTitle(title)
             )
             log.info("'{}' title is exists: {}", title, result)
             title = "test"
-            result = postBloomFilterService.checkIfPostSummaryAvailability(
-                PostSummary("d8caf856-53de-4d84-ba45-fbd940e2b24b", title)
+            result = postBloomFilterService.checkIfPostTitleAvailability(
+                PostTitle(title)
             )
             log.info("'{}' title is exists: {}", title, result)
         }
