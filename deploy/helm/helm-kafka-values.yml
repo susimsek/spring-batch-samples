@@ -7,10 +7,14 @@ controller:
   controllerOnly: true
   persistence:
     size: 50M
+  logPersistence:
+    enabled: false
 
 broker:
   persistence:
     size: 50M
+  logPersistence:
+    enabled: false
 
 kraft:
   enabled: true
@@ -19,13 +23,6 @@ kraft:
 image:
   repository: bitnami/kafka
   tag: 3.5.1-debian-11-r44
-
-
-persistence:
-  size: 50M
-
-volumePermissions:
-  enabled: true
 
 zookeeper:
   enabled: false
@@ -37,3 +34,26 @@ metrics:
     enabled: false
     labels:
       release: prometheus
+
+listeners:
+  client:
+    name: CLIENT
+    containerPort: 9092
+    protocol: PLAINTEXT
+  controller:
+    name: CONTROLLER
+    containerPort: 9093
+    protocol: PLAINTEXT
+  interbroker:
+    name: INTERNAL
+    containerPort: 9094
+    protocol: PLAINTEXT
+  external:
+    name: EXTERNAL
+    containerPort: 9095
+    protocol: PLAINTEXT
+
+externalAccess:
+  enabled: true
+  service:
+    type: ClusterIP

@@ -23,7 +23,16 @@ spring:
     properties:
       hibernate.cache.redisson.entity.expiration.time_to_live: 3600000
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: glider.srvs.cloudkafka.com:9094
+    properties:
+      enable:
+        idempotence: false
+      security:
+        protocol: SASL_SSL
+      sasl:
+        mechanism: SCRAM-SHA-512
+        jaas:
+          config: org.apache.kafka.common.security.scram.ScramLoginModule required username="xdiinweb" password="2-WUg78AseKMdQgzvBCtZ73DjVSCaRvX";
     template:
       default-topic: xdiinweb-posts
     producer:
@@ -54,5 +63,6 @@ logging:
 
 cache:
   redis:
-    server: redis://localhost:6379
+    server: redis://redis-10330.c15.us-east-1-4.ec2.cloud.redislabs.com:10330
     cluster: false
+    password: 5mbm3tZYp3GEdSciPQdHJ5eFN7y4Frqs
